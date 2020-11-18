@@ -1,0 +1,15 @@
+---
+title: "Untitled"
+author: "Colin Fay"
+date: "7/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+Sys.which("node")
+```
+

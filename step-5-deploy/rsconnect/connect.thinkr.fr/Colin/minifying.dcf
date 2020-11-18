@@ -1,0 +1,13 @@
+name: minifying
+title: minifying
+username: Colin
+account: Colin
+server: connect.thinkr.fr
+hostUrl: http://connect.thinkr.fr/__api__
+appId: 313
+bundleId: 1089
+url: http://connect.thinkr.fr/content/313/
+when: 1596206453.98456
+lastSyncTime: 1596206453.98457
+asMultiple: FALSE
+asStatic: FALSE

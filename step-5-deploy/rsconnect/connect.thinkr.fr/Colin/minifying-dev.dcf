@@ -1,0 +1,13 @@
+name: minifying-dev
+title: minifying-dev
+username: Colin
+account: Colin
+server: connect.thinkr.fr
+hostUrl: http://connect.thinkr.fr/__api__
+appId: 317
+bundleId: 1090
+url: http://connect.thinkr.fr/content/317/
+when: 1596207278.46902
+lastSyncTime: 1596207278.46904
+asMultiple: FALSE
+asStatic: FALSE

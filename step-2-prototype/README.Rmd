@@ -1,0 +1,38 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# minifying
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of minifying is to provide a minifying application for CSS, JS, JSON and HTML files. 
+
+It can be installed from GitHub with:
+
+```{r eval = FALSE}
+remotes::install_github("Colinfay/minifying", subdir = "step-2-prototype")
+```
+
+And then run with: 
+
+```{r eval = FALSE}
+minifying::run_app()
+```
+
+
+## Code of Conduct
+
+Please note that the minifying project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

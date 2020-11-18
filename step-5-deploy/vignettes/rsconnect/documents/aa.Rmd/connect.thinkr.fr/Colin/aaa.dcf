@@ -1,0 +1,13 @@
+name: aaa
+title: aaa
+username: Colin
+account: Colin
+server: connect.thinkr.fr
+hostUrl: http://connect.thinkr.fr/__api__
+appId: 314
+bundleId: 1068
+url: http://connect.thinkr.fr/content/314/
+when: 1595857417.56132
+lastSyncTime: 1595857417.56138
+asMultiple: FALSE
+asStatic: FALSE

@@ -1,0 +1,14 @@
+name: zaa
+title: zaa
+username: Colin
+account: Colin
+server: connect.thinkr.fr
+hostUrl: http://connect.thinkr.fr/__api__
+appId: 315
+bundleId: 1065
+url: http://connect.thinkr.fr/content/315/
+when: 1595856690.79891
+lastSyncTime: 1595856690.79893
+asMultiple: TRUE
+asStatic: FALSE
+ignoredFiles: minifying.Rmd

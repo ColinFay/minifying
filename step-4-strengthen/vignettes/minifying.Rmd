@@ -1,0 +1,155 @@
+---
+title: "minifying"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{minifying}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`{minifying}` is a `{shiny}` application that helps minifying css, html, javascript and JSON files. 
+It relies on the `{minifyr}` package, which is a wrapper around `node-minify`. 
+
+The core backend of this application is divided into three functions:
+
+```{r echo = FALSE}
+library(minifyr)
+funs <- ls("package:minifyr", pattern = "minifyr_js_")
+```
+
+### `guess_minifier()`
+
+This function tries to guess the minifier to use, based on the file extension:
+
+```{r echo = FALSE}
+library(minifyr)
+guess_minifier <- function(file){
+  # We'll start by getting the file extension
+  ext <- tools::file_ext(file)
+  # Check that the extension is correct, if not, return early
+  # It's important to do this kind of check also on the server side 
+  # As HTML manual tempering would allow to also send other type of files
+  if (
+    ! ext %in% c("js", "css", "html", "json")
+  ){
+    # Return early
+    return(list())
+  }
+  # We'll then retrieve the available pattern based on the extension
+  patt <- switch(
+    ext, 
+    js = "minifyr_js_.+",
+    html = "minifyr_html_.+",
+    css = "minifyr_css_.+",
+    json = "minifyr_json_.+"
+  )
+  # List all the available functions to minify the file
+  list(
+    file = file,
+    ext = ext,
+    # We return this pattern so that it will be used to update the selectInput that 
+    # is used to select an algo
+    pattern = patt, 
+    functions = grep(patt, names(loadNamespace("minifyr")), value = TRUE)
+  )
+  
+}
+```
+
+```{r}
+# minifyr comes with a series of examples, so we can use them as tests
+guess_minifier(
+  minifyr_example("css")
+)
+guess_minifier(
+  minifyr_example("js")
+)
+guess_minifier(
+  minifyr_example("html")
+)
+guess_minifier(
+  minifyr_example("json")
+)
+# Try with a non valid extension
+guess_minifier(
+  "path/to/text.docx"
+)
+```
+
+
+### `compress()`
+
+`compress()` perform the minification.
+
+```{r echo = FALSE}
+compress <- function(algo, selection){
+  # Creating a tempfile using our algo object
+  tps <- tempfile(fileext = sprintf(".%s", algo$ext))
+  # Getting the function with the selection
+  converter <- get(
+    grep(selection, algo$functions, value = TRUE)
+  )
+  # Do the conversion
+  converter(algo$file, tps)
+  # Return the temp file
+  return(tps)
+}
+
+algo <- guess_minifier(
+  minifyr_example("js")
+)
+```
+
+
+```{r}
+compress(
+  algo = algo, 
+  selection = "babel"
+)
+```
+
+### `compare()`
+
+`compare()` compares the size of two files, so that we can evaluate the size gain from the minification (but it can also be used with any other files).
+
+```{r echo = FALSE}
+compare <- function(original, minified){
+  # Get the file size of both
+  original <- fs::file_info(original)$size
+  minified <- fs::file_info(minified)$size
+  return(original - minified)
+}
+```
+
+```{r}
+compare(
+  minifyr_example("js"), 
+  minifyr_example("html")
+)
+```
+
+### Full workflow
+
+These three functions are designed to be combined:
+
+```{r}
+algo <- guess_minifier(
+  minifyr_example("js")
+)
+
+compressed <- compress(
+  algo = algo, 
+  selection = "babel"
+)
+compare(
+  minifyr_example("js"), 
+  compressed
+)
+```
